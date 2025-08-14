@@ -1,25 +1,18 @@
-### Tool 1: SNP & Sample QC
+### Tool 2: Allele Frequency Calculator
 
 **Input:**
 
 * genotypes.tsv
-* snp\_annotation.tsv
-* phenotypes\_covariates.tsv (optional)
-* MAF threshold (default = 0.01)
-* SNP missingness threshold (default = 0.05)
-* Sample missingness threshold (default = 0.1)
+* snp\_annotation.tsv (optional)
+* Sample subset file (optional)
 * Missing value code (default = NA)
 
 **Output:**
 
-* Filtered genotypes
-* Filtered SNP annotation
-* Filtered sample list
-* QC report (txt with summary stats)
+* TSV with SNP ID, chrom, pos, counts of each genotype, n\_non\_missing, and MAF
 
 **Logic:**
 
-* Remove SNPs with missingness > threshold
-* Remove SNPs with MAF < threshold
-* Remove samples with missingness > threshold
-* Output counts before/after filtering
+* Compute allele counts (0, 1, 2)
+* Calculate MAF per SNP
+* If < 10 non-missing samples, set MAF = NA
