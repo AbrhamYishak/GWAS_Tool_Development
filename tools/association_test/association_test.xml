@@ -1,0 +1,39 @@
+<tool id="logistic_assoc_test" name="Association Test (Logistic Regression)" version="1.0.0">
+    <description>Perform logistic regression per SNP for a binary phenotype</description>
+
+    <requirements>
+        <requirement type="package" version="1.0.0">python</requirement>
+        <requirement type="package">pandas</requirement>
+        <requirement type="package">statsmodels</requirement>
+    </requirements>
+
+    <command>
+        python3 '$__tool_directory__/association_test.py' 
+        --genotypes '$genotypes' 
+        --phenotypes_covariates '$phenotypes_covariates' 
+        --snp_annotation '$snp_annotation' 
+        --covariates '$covariates' 
+        --min_maf '$min_maf' 
+        --missing_value '$missing_value' 
+        --output_file '$output_file'
+    </command>
+
+    <inputs>
+        <param name="genotypes" type="data" format="tsv" label="Genotype matrix (TSV)" />
+        <param name="phenotypes_covariates" type="data" format="tsv" label="Phenotypes + covariates" />
+        <param name="snp_annotation" type="data" format="tsv" label="SNP annotation (optional)" optional="true" />
+        <param name="covariates" type="text" label="Covariates (comma-separated)" />
+        <param name="min_maf" type="float" label="Minimum MAF" value="0.01"/>
+        <param name="missing_value" type="text" label="Missing value code" value="NA"/>
+    </inputs>
+
+    <outputs>
+        <data name="output_file" format="tsv" label="Association results"/>
+    </outputs>
+
+    <help>
+        This tool performs SNP-wise logistic regression:
+        phenotype ~ genotype + covariates.
+        SNPs with MAF below threshold or too few samples are skipped.
+    </help>
+</tool>

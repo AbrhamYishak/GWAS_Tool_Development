@@ -1,0 +1,44 @@
+<tool id="windowed_ld" name="Windowed LD Calculator" version="1.0.1">
+    <description>Compute pairwise LD (r²) for SNPs within a window and plot heatmap</description>
+
+    <requirements>
+        <requirement type="package">python</requirement>
+        <requirement type="package">pandas</requirement>
+        <requirement type="package">numpy</requirement>
+        <requirement type="package">matplotlib</requirement>
+        <requirement type="package">seaborn</requirement>
+    </requirements>
+
+    <command>
+        python3 "$__tool_directory__/windowed_ld_calculator.py" 
+        --genotypes "$genotypes"
+        --snp_annotation "$snp_annotation"
+        --focal_snp "$focal_snp"
+        --window_kb "$window_kb"
+        --min_maf "$min_maf"
+        --missing_code "$missing_code"
+        --ld_matrix_out "$ld_matrix_out"
+        --heatmap_out "${heatmap_out}.png"
+    </command>
+
+    <inputs>
+        <param name="genotypes" type="data" format="tsv" label="Genotype matrix TSV"/>
+        <param name="snp_annotation" type="data" format="tsv" label="SNP annotation TSV"/>
+        <param name="focal_snp" type="text" label="Focal SNP ID or Chrom:Position"/>
+        <param name="window_kb" type="integer" label="Window size (kb)" value="250"/>
+        <param name="min_maf" type="float" label="Minimum MAF" value="0.01"/>
+        <param name="missing_code" type="text" label="Missing value code" value="NA"/>
+    </inputs>
+
+    <outputs>
+        <data name="ld_matrix_out" format="tsv" label="LD matrix TSV" file="ld_matrix.tsv"/>
+        <data name="heatmap_out" format="png" label="LD heatmap PNG" file="ld_heatmap.png"/>
+    </outputs>
+
+    <help>
+        This tool computes pairwise linkage disequilibrium (r²) for SNPs within a genomic window around a focal SNP.
+        Outputs include:
+        - LD matrix as TSV
+        - Heatmap PNG
+    </help>
+</tool>

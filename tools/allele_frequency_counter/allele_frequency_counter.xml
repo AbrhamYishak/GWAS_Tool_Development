@@ -1,0 +1,33 @@
+<tool id="allele_freq_calculator" name="Allele Frequency Calculator" version="1.0.0">
+    <description>Compute allele counts and minor allele frequency per SNP</description>
+
+    <requirements>
+        <requirement type="package" version="1.0.0">python</requirement>
+        <requirement type="package">pandas</requirement>
+    </requirements>
+
+    <command>
+        python3 '$__tool_directory__/allele_frequency_calculator.py' 
+        --genotypes '$genotypes' 
+        --snp_annotation '$snp_annotation' 
+        --sample_subset '$sample_subset' 
+        --missing_value '$missing_value' 
+        --output_file '$output_file'
+    </command>
+
+    <inputs>
+        <param name="genotypes" type="data" format="tsv" label="Genotype matrix (TSV)" />
+        <param name="snp_annotation" type="data" format="tsv" label="SNP annotation (optional)" optional="true" />
+        <param name="sample_subset" type="data" format="txt" label="Sample subset file (optional)" optional="true" />
+        <param name="missing_value" type="text" label="Missing value code" value="NA"/>
+    </inputs>
+
+    <outputs>
+        <data name="output_file" format="tsv" label="Allele frequency results"/>
+    </outputs>
+
+    <help>
+        This tool calculates allele counts (0, 1, 2) and minor allele frequency (MAF) per SNP.
+        If a SNP has fewer than 10 non-missing samples, MAF is set to NA.
+    </help>
+</tool>

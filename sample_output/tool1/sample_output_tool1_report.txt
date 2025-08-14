@@ -1,0 +1,3 @@
+SNPs before missingness filter: 2000, after: 2000
+Samples before missingness filter: 200, after: 200
+SNPs before MAF filter: 2000, after: 2000

@@ -1,0 +1,38 @@
+<tool id="manhattan_plot" name="Manhattan Plot Generator" version="1.0.0">
+    <description>Generate Manhattan plot from GWAS association results</description>
+
+    <requirements>
+        <requirement type="package">python</requirement>
+        <requirement type="package">pandas</requirement>
+        <requirement type="package">matplotlib</requirement>
+    </requirements>
+
+	<command>
+    python3 "$__tool_directory__/manhattan_plot_generator.py" 
+    --assoc "$assoc_results"
+    --annotation "$snp_annotation"
+    --pvalue_threshold "$pvalue_threshold"
+    --top_n "$top_n"
+    --plot_out "${output_prefix}_manhattan.png"
+    --hits_out "${output_prefix}_top_hits.tsv"
+	</command>
+
+    <inputs>
+        <param name="assoc_results" type="data" format="tsv" label="Association results (from Tool 3)"/>
+        <param name="snp_annotation" type="data" format="tsv" label="SNP annotation (optional)" optional="true"/>
+        <param name="pvalue_threshold" type="float" label="P-value threshold" value="5e-8"/>
+        <param name="top_n" type="integer" label="Number of top hits" value="20"/>
+        <param name="output_prefix" type="text" label="Output file prefix" value="results"/>
+    </inputs>
+
+    <outputs>
+        <data name="output_png" format="png" from_work_dir="results_manhattan.png"/>
+        <data name="top_hits_tsv" format="tsv" from_work_dir="results_top_hits.tsv"/>
+    </outputs>
+
+    <help>
+        This tool generates a Manhattan plot from GWAS association results.
+        SNPs below the significance threshold are highlighted in red.
+        Outputs the top N SNPs by p-value.
+    </help>
+</tool>

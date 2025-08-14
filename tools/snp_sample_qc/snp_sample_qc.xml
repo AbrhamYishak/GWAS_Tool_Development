@@ -1,0 +1,41 @@
+<tool id="snp" name="SNP Sample QC" version="1.0.0">
+    <description>Filter SNPs and samples based on missingness and MAF thresholds</description>
+
+    <command><![CDATA[
+		python '$__tool_directory__/snp_sample_qc.py'
+        --genotypes "$genotypes"
+        --snp_annotation "$snp_annotation"
+        --phenotypes "$phenotypes"
+        --maf_threshold "$maf_threshold"
+        --snp_missingness_threshold "$snp_missingness_threshold"
+        --sample_missingness_threshold "$sample_missingness_threshold"
+        --missing_value "$missing_value"
+        --output_dir "$output_dir"
+    ]]></command>
+
+    <inputs>
+		<param name="genotypes" type="data" format="tsv" label="Genotype matrix" />
+		<param name="snp_annotation" type="data" format="tsv" label="SNP annotation"/>
+		<param name="phenotypes" type="data" format="tsv" label="Phenotypes/Covariates (optional)" optional="true"/>
+        <param name="maf_threshold" type="float" label="MAF threshold" value="0.01" />
+        <param name="snp_missingness_threshold" type="float" label="SNP missingness threshold" value="0.05" />
+        <param name="sample_missingness_threshold" type="float" label="Sample missingness threshold" value="0.1" />
+        <param name="missing_value" type="text" label="Missing value code" value="NA" />
+        <param name="output_dir" type="text" label="Output directory" value="qc_output" />
+    </inputs>
+
+    <outputs>
+        <data name="filtered_genotypes" format="tsv" from_work_dir="qc_output/filtered_genotypes.tsv" />
+        <data name="filtered_snp_annotation" format="tsv" from_work_dir="qc_output/filtered_snp_annotation.tsv" />
+        <data name="filtered_phenotypes" format="tsv" from_work_dir="qc_output/filtered_phenotypes.tsv" />
+        <data name="qc_report" format="txt" from_work_dir="qc_output/qc_report.txt" />
+    </outputs>
+
+    <help>
+        This tool performs SNP Sample QC:
+        - Removes SNPs with high missingness
+        - Removes samples with high missingness
+        - Removes SNPs with low MAF
+        Outputs filtered genotype, SNP annotation, phenotype files, and a QC report.
+    </help>
+</tool>
